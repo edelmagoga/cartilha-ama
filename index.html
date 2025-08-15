@@ -12,7 +12,6 @@
   <style>
     :root{
       --azul:#003366; --azul-claro:#e8f1ff; --azul-ativo:#2b6cb0;
-      --amarelo:#ffcc00; --vermelho:#cc0000;
       --bg:#f6f8fb; --text:#111; --card:#fff; --line:#eaeef2
     }
     *{box-sizing:border-box}
@@ -21,7 +20,7 @@
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; line-height:1.6
     }
 
-    /* Cabeçalho fixo (inclui logo + menu) */
+    /* Cabeçalho fixo (logo + menu) */
     header{
       position:sticky; top:0; z-index:30; background:#fff; border-bottom:1px solid var(--line)
     }
@@ -31,7 +30,7 @@
     .bar img{height:28px}
     .brand{font-weight:800; color:var(--azul)}
 
-    /* MENU: uma linha, deslize com o dedo, sem barra visível */
+    /* MENU: uma linha, deslize com o dedo, sem barra de rolagem */
     nav#tabs{
       display:flex; gap:.5rem; padding:.5rem 1rem;
       overflow-x:auto; overflow-y:hidden; white-space:nowrap;
@@ -39,8 +38,8 @@
       -webkit-overflow-scrolling:touch;      /* inércia iOS */
       scroll-snap-type:x proximity;          /* “gruda” melhor ao parar */
     }
-    nav#tabs::-webkit-scrollbar{ display:none }  /* Chrome/Safari/Edge */
-    nav#tabs{ scrollbar-width:none; -ms-overflow-style:none } /* Firefox/IE */
+    nav#tabs::-webkit-scrollbar{ display:none }              /* Chrome/Safari/Edge */
+    nav#tabs{ scrollbar-width:none; -ms-overflow-style:none }/* Firefox/IE */
 
     nav#tabs a{
       flex:0 0 auto;
@@ -127,12 +126,12 @@ Estamos à disposição para oque precisar
 
 ## Contatos Úteis - Telefone/WhatsApp
 Administrativo ...................... (83) 98118-0777
-Serviço Social ...................... (83) 98150-0807
+Serviço Social ....................... (83) 98150-0807
 Coordenação Terapêutica ... (83) 98140-7770
-Enfermagem ........................ (83) 98181-1972
+Enfermagem ......................... (83) 98181-1972
 Farmácia ............................... (83) 98133-0777
 Lanchonete ........................... (83) 98163-7007
-Telefone Comercial ............. (83) 98114-0777`
+Telefone Comercial .............. (83) 98114-0777`
       },
       {
         title: "O Tratamento",
@@ -215,7 +214,7 @@ O paciente só vai até onde o familiar permite. Ele precisa saber que a famíli
 Mostre que você está junto, mas que a decisão final sobre alta é da equipe profissional.`
       },
       {
-        title: "Saudade?",
+        title: "Saudades?",
         image: "assets/ligacoes.jpg",
         side: "right",
         body:
@@ -373,6 +372,40 @@ Durante esse período fora, é fundamental manter a firmeza e o cuidado. Siga es
       e.preventDefault();
       if(idx<SECTIONS.length-1){ idx++; render(true); }
     };
+
+    // ====== Swipe para mudar de página (mobile friendly) ======
+    (function enableSwipe(){
+      const area = document.querySelector('main'); // evita brigar com o menu
+      let startX=0, startY=0, endX=0, endY=0;
+      const MIN_DIST = 50;   // px mínimos no eixo X
+      const MAX_ANGLE = 30;  // tolera até ~30px no Y para cada 50px no X
+
+      area.addEventListener('touchstart', (e)=>{
+        if(!e.touches || !e.touches.length) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      }, {passive:true});
+
+      area.addEventListener('touchend', (e)=>{
+        if(!e.changedTouches || !e.changedTouches.length) return;
+        endX = e.changedTouches[0].clientX;
+        endY = e.changedTouches[0].clientY;
+
+        const dx = endX - startX;
+        const dy = endY - startY;
+
+        // ignora se é mais vertical do que horizontal
+        if (Math.abs(dx) < MIN_DIST || Math.abs(dy) > Math.abs(dx) * (MAX_ANGLE / MIN_DIST)) return;
+
+        if (dx > 0) {
+          // swipe direita -> anterior
+          if (idx > 0){ idx--; render(true); }
+        } else {
+          // swipe esquerda -> próximo
+          if (idx < SECTIONS.length-1){ idx++; render(true); }
+        }
+      }, {passive:true});
+    })();
 
     // PWA (opcional)
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
