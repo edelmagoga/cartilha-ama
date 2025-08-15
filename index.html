@@ -81,6 +81,31 @@
     .btn.primary{background:var(--azul); color:#fff}
 
     footer{max-width:980px; margin:1.2rem auto 2rem; padding:0 1rem; color:#64748b; font-size:.9rem; text-align:center}
+
+    /* ===== Aviso de “Deslize para o lado” ===== */
+    #swipeHint {
+      position: fixed;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 51, 102, 0.85); /* azul escuro semi-transparente */
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      text-align: center;
+      z-index: 9999;
+      display: none; /* começa escondido */
+      max-width: 90vw;
+      box-shadow: 0 6px 16px rgba(0,0,0,.25);
+      animation: fadeInOut 3s ease-in-out;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(6px); }
+      10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(-50%) translateY(6px); }
+    }
   </style>
 </head>
 <body>
@@ -109,6 +134,9 @@
   <footer>Indique a Clinica AMA para quem precisa!</footer>
   <footer>Telefone Comercial ........ (83) 98114-0777</footer>
 
+  <!-- Aviso semitransparente -->
+  <div id="swipeHint">👉 Deslize para o lado para mudar de página 👈</div>
+
   <script>
     /* ========= SECTIONS ========= */
     const SECTIONS = [
@@ -126,12 +154,12 @@ Estamos à disposição para oque precisar
 
 ## Contatos Úteis - Telefone/WhatsApp
 Administrativo ...................... (83) 98118-0777
-Serviço Social ....................... (83) 98150-0807
+Serviço Social ...................... (83) 98150-0807
 Coordenação Terapêutica ... (83) 98140-7770
-Enfermagem ......................... (83) 98181-1972
+Enfermagem ........................ (83) 98181-1972
 Farmácia ............................... (83) 98133-0777
 Lanchonete ........................... (83) 98163-7007
-Telefone Comercial .............. (83) 98114-0777`
+Telefone Comercial ............. (83) 98114-0777`
       },
       {
         title: "O Tratamento",
@@ -214,7 +242,7 @@ O paciente só vai até onde o familiar permite. Ele precisa saber que a famíli
 Mostre que você está junto, mas que a decisão final sobre alta é da equipe profissional.`
       },
       {
-        title: "Saudades?",
+        title: "Saudade?",
         image: "assets/ligacoes.jpg",
         side: "right",
         body:
@@ -255,6 +283,22 @@ Durante esse período fora, é fundamental manter a firmeza e o cuidado. Siga es
 8. Não fale sobre interromper o tratamento;
 9. Mantenha contato com o coordenador da clínica;
 10. O retorno à Clínica deve acontecer até 16:30hs.`
+      },
+         {
+        title: "Lanchonete",
+        image: "assets/lanchonete.jpg",
+        side: "right",
+        body:
+`## Lanchonete AMA
+Na Clínica AMA, acreditamos que o cuidado vai além do tratamento terapêutico.
+Por isso, criamos a Lanchonete AMA: um espaço acolhedor, com qualidade, variedade e valores acessíveis.
+Pequenos prazeres equilibrados e saborosos, pensada para o dia a dia do nosso acolhido.
+Também oferecemos produtos de higiene, cuidados pessoais e utilidades essenciais, além de literatura de Narcóticos Anônimos que estimula a consciência, a espiritualidade e o autoconhecimento.
+Durante a recuperação, pequenos prazeres — como um lanche ou um sabonete preferido — ajudam a resgatar a autoestima e a conexão com a vida.
+Lembre-se: A internação não é um castigo. É um recomeço.
+Cada escolha do acolhido é também uma oportunidade de responsabilidade, equilíbrio e liberdade com consciência.
+Solicite mais informações via WhatsApp clicando sobre o número do telefone.
+Lanchonete ........................... (83) 98163-7007
       },
       {
         title: "Mais",
@@ -373,12 +417,12 @@ Durante esse período fora, é fundamental manter a firmeza e o cuidado. Siga es
       if(idx<SECTIONS.length-1){ idx++; render(true); }
     };
 
-    // ====== Swipe para mudar de página (mobile friendly) ======
+    // ===== Swipe para mudar de página (mobile friendly) =====
     (function enableSwipe(){
       const area = document.querySelector('main'); // evita brigar com o menu
       let startX=0, startY=0, endX=0, endY=0;
       const MIN_DIST = 50;   // px mínimos no eixo X
-      const MAX_ANGLE = 30;  // tolera até ~30px no Y para cada 50px no X
+      const MAX_ANGLE = 30;  // tolera ~30px no Y para cada 50px no X
 
       area.addEventListener('touchstart', (e)=>{
         if(!e.touches || !e.touches.length) return;
@@ -405,6 +449,42 @@ Durante esse período fora, é fundamental manter a firmeza e o cuidado. Siga es
           if (idx < SECTIONS.length-1){ idx++; render(true); }
         }
       }, {passive:true});
+    })();
+
+    // ===== Aviso “Deslize para o lado” =====
+    (function swipeHintController(){
+      const hint = document.getElementById('swipeHint');
+
+      function showSwipeHint(){
+        // só mostra em telas pequenas ou touch
+        const likelyTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (!likelyTouch) return;
+        hint.style.display = 'block';
+        // animação dura 3s (definida no CSS)
+        setTimeout(()=>{ hint.style.display = 'none'; }, 3000);
+      }
+
+      // Mostra 2s após carregar
+      setTimeout(showSwipeHint, 2000);
+
+      // Reaparece a cada 20s
+      const intervalId = setInterval(showSwipeHint, 20000);
+
+      // Se o usuário interagir (clique no menu, swipe, navegação), a gente esconde na hora
+      ['touchstart','click','scroll'].forEach(ev=>{
+        window.addEventListener(ev, ()=>{ hint.style.display='none'; }, {passive:true});
+      });
+
+      // Também mostra ao mudar de página (primeiras navegações)
+      let hintShownOnChanges = 0;
+      const origRender = render;
+      render = function(forceTop=false){
+        origRender(forceTop);
+        if (hintShownOnChanges < 2) { // evita ser chato demais
+          setTimeout(showSwipeHint, 800);
+          hintShownOnChanges++;
+        }
+      };
     })();
 
     // PWA (opcional)
