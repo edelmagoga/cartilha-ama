@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cartilha Familiar – Clínica AMA</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#003366"/>
+  <link rel="icon" href="assets/logo.png">
+  <style>
+    :root{--azul:#003366;--amarelo:#ffcc00;--vermelho:#cc0000;--bg:#f6f8fb;--text:#111;--card:#fff;--line:#eaeef2}
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+    header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line)}
+    .bar{max-width:980px;margin:auto;display:flex;align-items:center;gap:.75rem;padding:.6rem 1rem}
+    .bar img{height:28px}
+    .brand{font-weight:800;color:var(--azul)}
+    nav{max-width:980px;margin:auto;display:flex;gap:.5rem;padding:.5rem 1rem;overflow:auto}
+    nav a{flex:0 0 auto;padding:.45rem .7rem;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:#334;background:#fff;white-space:nowrap}
+    nav a.active{background:var(--azul);color:#fff;border-color:var(--azul)}
+    main{max-width:980px;margin:0 auto;padding:1rem}
+    /* .hero removido para tirar a imagem grande repetida */
+    .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1rem;box-shadow:0 6px 16px rgba(0,0,0,.03)}
+    h1{color:var(--azul);font-size:1.25rem;margin:.2rem 0 1rem}
+    p{margin:.5rem 0}
+    ul{margin:.4rem 0 .6rem .9rem}
+    li{margin:.25rem 0}
+    .split{display:grid;gap:1rem;align-items:center}
+    .split.left{grid-template-columns: 1fr 1.2fr}
+    .split.right{grid-template-columns: 1.2fr 1fr}
+    .media img{width:100%;height:auto;border-radius:14px;border:1px solid var(--line)}
+    .pager{display:flex;gap:.6rem;margin-top:1rem}
+    .btn{flex:1;text-align:center;padding:.9rem;border-radius:12px;font-weight:700;text-decoration:none;display:block;border:2px solid var(--azul);color:var(--azul)}
+    .btn.primary{background:var(--azul);color:#fff}
+    footer{max-width:980px;margin:1.2rem auto 2rem;padding:0 1rem;color:#64748b;font-size:.9rem;text-align:center}
+    @media (max-width:820px){ .split.left,.split.right{grid-template-columns: 1fr} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <img src="assets/logo.png" alt="Clínica AMA"/>
+      <div class="brand">Cartilha Familiar — Clínica AMA</div>
+    </div>
+    <nav id="tabs"></nav>
+  </header>
+  <main>
+    <!-- hero removido -->
+    <div id="content"></div>
+    <div class="pager">
+      <a class="btn" id="prevBtn" href="#">Anterior</a>
+      <a class="btn primary" id="nextBtn" href="#">Próximo</a>
+    </div>
+  </main>
+  <footer>Layout responsivo com imagem lateral. Links ativos para sites e WhatsApp.</footer>
+  <script>
+    const SECTIONS = [{"title": "Bem-vindos ao Novo Começo", "body": "Agradecemos a confiança de colocar seu ente querido sob nossos cuidados. Entendemos o valor da vida em nossas mãos e sabemos o quanto essa decisão é difícil, mas ela é, sem dúvida, um passo corajoso na direção da reabilitação da saúde mental do paciente.\nEsta cartilha foi feita especialmente para você, familiar. Aqui você encontrará orientações importantes sobre o tratamento, contatos, visitas, chamadas telefônicas e cuidados necessários durante e após a internação. Leia com atenção. Cada ponto é essencial para o sucesso do tratamento.\nNosso trabalho é sério, e o seu apoio faz toda a diferença. Seja firme. Seja presente. Seja parte ativa dessa jornada.", "image": "assets/bem-vindos-ao-novo-comeco.jpg", "side": "left"}, {"title": "Sobre a Internação", "body": "A Tratamento de Saúde Mental abrange quadros de psicose, crises de ansiedade ou pânico, depressão, comportamentos autodestrutivos, transtornos alimentares e dependências (química, alcoólica e de jogos). Em particular as dependências são reconhecidas pela OMS como uma doença crônica, causada por diversos fatores: biológicos, sociais, emocionais e ambientais.\nInternar não é punir, é cuidar, é oferecer uma chance real de tratamento.\nNosso papel é acolher, tratar e preparar o paciente para uma nova vida. O seu papel é confiar e colaborar. Isso começa com a compreensão do processo.", "image": "assets/sobre-a-internacao.jpg", "side": "right"}, {"title": "Tempo de Tratamento", "body": "A proposta terapêutica inicial tem a duração de 90 a 180 dias, podendo ser ajustada conforme a evolução do paciente.\nNesse período, o foco é:\n- Romper o ciclo autodestrutivo;\n- Trabalhar questões emocionais e comportamentais;\n- Evitar recaídas;\n- Construir um plano de vida saudável.\nLembre-se: não há cura mágica. O tratamento de saúde mental é um processo contínuo. Retirar o paciente antes da alta médica pode colocar tudo a perder.", "image": "assets/tempo-de-tratamento.jpg", "side": "left"}, {"title": "Codependência Familiar: quando o amor atrapalha", "body": "Sabemos que a família age movida pelo amor. Mas, muitas vezes, esse amor é mal direcionado e acaba prejudicando mais do que ajudando.\nA verdade é dura, mas precisa ser dita: muitos tratamentos são interrompidos por influência da própria família. E isso, na maioria das vezes, acontece por falta de preparo emocional ou de conhecimento sobre a doença.\nA internação não é castigo. É tratamento.\nSe você quer ajudar de verdade, comece se ajudando, pois as patologias mentais costumam adoecer toda a família. Participe de grupos de apoio sugeridos a seguir. Eles existem para fortalecer você nesse processo. Acompanhar o tratamento do lado de fora exige firmeza e postura clara.\nRegras fundamentais:\n- A primeira visita só acontece após 30 dias, e pode ser adiada caso a equipe julgue necessário;\n- Telefonemas excessivos ou visitas antecipadas atrapalham a adaptação do paciente;\n- Evite transmitir más notícias por telefone. Em caso de urgência, avise a equipe;\n- Jamais retire o paciente da clínica sem alta médica. Isso é um aborto de tratamento.", "image": "assets/codependencia-familiar-quando-o-amor-atrapalha.jpg", "side": "right"}, {"title": "Grupos de Apoio e Tratamento", "body": "Para lidar com a pessoa adoecida é preciso estar preparado e fortalecido, pois os transtornos do paciente adoecem, na maioria das vezes, todo o grupo familiar. E este preparo se conquista com conhecimento e suporte emocional. Procure ajuda profissional e participe de um grupo de apoio ao menos 1 vez por semana durante o período de internação.\nSites onde você encontrará toda a informação necessária e muitos grupos de ajuda on-line.\nGrupos indicados:\n- Amor Exigente – Para familiares de dependentes químicos e alcoolistas – www.amorexigente.org.br\n- Amor Exigentinho – Para familiares crianças e adolescentes.\n- Pastoral da Sobriedade – Para familiares de dependentes químicos e alcoolistas – www.sobriedade.org.br\n- Nar-Anon – Para familiares de dependentes químicos – www.naranon.org.br\n- Al-Anon – Para familiares de alcoolistas – www.al-anon.org.br", "image": "assets/grupos-de-apoio-e-tratamento.jpg", "side": "left"}, {"title": "Motivação: firmeza com amor", "body": "Pacientes bem motivados permanecem mais tempo em tratamento. Mas motivar não é agradar. É manter a firmeza.\nO paciente só vai até onde o familiar permite. Ele precisa saber que a família está do lado dele, mas não do lado da doença.\nMostre que você está junto, mas que a decisão final sobre alta é da equipe profissional.", "image": "assets/motivacao-firmeza-com-amor.jpg", "side": "right"}, {"title": "Quebra de Tratamento: o erro mais comum", "body": "A maior causa de regressão é a interrupção precoce do tratamento. A aparência física pode melhorar em poucas semanas, mas o comportamento, a mente e as emoções precisam de muito mais tempo.\nNão confunda melhora aparente com cura. “Ele já está bem” é uma das frases mais perigosas nessa jornada.\nAntes de qualquer decisão:\n- Converse com a equipe;\n- Nunca mude a data da alta por conta própria;\n- Mudar a data? Que seja para mais, nunca para menos.", "image": "assets/quebra-de-tratamento-o-erro-mais-comum.jpg", "side": "left"}, {"title": "Desistência do Tratamento", "body": "Em muitos casos, quem desiste do tratamento não é o paciente, mas a família. Isso acontece quando o familiar não consegue lidar com o desconforto de dizer 'não'. \nEssa fragilidade pode levar o paciente à recaída. A Clínica AMA deixa claro: quando o familiar retira o paciente sem alta médica, a responsabilidade pelos resultados passa a ser exclusivamente da família.\nO tratamento é sério, contínuo e exige comprometimento. Interrompê-lo de forma precipitada anula grande parte dos avanços conquistados.", "image": "assets/desistencia-do-tratamento.jpg", "side": "right"}, {"title": "Nutrição e Alimentação", "body": "As refeições são preparadas com acompanhamento de nutricionista, respeitando padrões de qualidade e equilíbrio nutricional.\nServimos 4 refeições diárias: café da manhã, almoço, lanche da tarde e jantar.\nPor normas da Vigilância Sanitária, é proibida a entrada de alimentos trazidos pelos familiares. Para conforto dos pacientes, oferecemos uma lanchonete com produtos diversos.", "image": "assets/nutricao-e-alimentacao.jpg", "side": "left"}, {"title": "Equipe Terapêutica", "body": "A Clínica AMA conta com equipe multiprofissional capacitada para oferecer um tratamento completo e individualizado.\nNossa equipe inclui: psiquiatras, médicos clínicos, enfermeiros, técnicos de enfermagem, psicólogos, nutricionista, farmacêutica, terapeutas, coordenadores e monitores.", "image": "assets/equipe-terapeutica.jpg", "side": "right"}, {"title": "Tratamento Medicamentoso", "body": "Cada paciente é avaliado individualmente por nossa equipe médica e psiquiátrica antes de qualquer prescrição medicamentosa.\nCaso haja necessidade de uso contínuo de medicamentos após a alta, é essencial seguir a orientação médica.\nA retirada abrupta da medicação, por conta própria, pode causar recaídas sérias. Converse com a equipe antes de qualquer mudança. O custo dos medicamentos varia de acordo com convênios ou forma de contratação.", "image": "assets/tratamento-medicamentoso.jpg", "side": "left"}, {"title": "Ligações", "body": "• A primeira ligação acontece após, no mínimo, 20 dias de internação, podendo ser flexibilizado de acordo com o caso ou necessidade.\n• Haverá uma ligação é semanal com duração de 10 minutos ou duas de 5 minutos, caso haja necessidade.\n• Em situações de emergência, entraremos em contato com os números cadastrados.\n• Na semana em que há visita, não haverá ligação.\nDurante a ligação:\n- Incentive o tratamento;\n- Pergunte sobre o que está aprendendo;\n- Evite notícias negativas ou combinados sobre saída ou visita;\n- Não diga ao paciente a data da próxima visita.", "image": "assets/ligacoes.jpg", "side": "right"}, {"title": "Visitas", "body": "A primeira visita ocorre após 30 dias de internação e dependerá da avaliação da equipe, podendo ser flexibilizado de acordo com o caso ou necessidade.\nTodas as visitas devem ser agendadas previamente com a Assistente Social ou Coordenador Terapêutico.\nHorários de visita: das 9h às 12h ou das 14h às 17h.\nAtrasos não estendem o tempo da visita.\nMáximo de 5 visitantes por paciente.\nObservar o uso de trajes adequados, considerando o ambiente de predominância masculina em regime de isolamento.\nSomente pessoas autorizadas previamente terão acesso à visita.\nOs visitantes devem deixar celulares no carro ou na administração. Não é permitido o uso de celular particular nas dependências da clínica.\nAlimentos, proteína, suplementos, etc..., devem ser trazidos em embalagens lacradas.\nQualquer material, livro, presente, dinheiro, roupa, etc, ..., deve ser entregue ao monitor na administração para que seja feito protocolo em seguida é entregue ao paciente ou destinado ao setor responsável.\nNão entregue nada ao paciente ou peça para que ele pegue algo no carro.", "image": "assets/visitas.jpg", "side": "left"}, {"title": "Ressocialização e Reinserção Familiar", "body": "A ressocialização acontece se a equipe multidisciplinar julgar benéfico e somente após 80 dias de tratamento.\nDurante esse período fora, é fundamental manter a firmeza e o cuidado. Siga estas orientações:\n1. Não deixe o paciente sair sozinho;\n2. Não permita que dirija;\n3. Não dê dinheiro;\n4. Ele deve retornar à clínica no horário e data combinados;\n5. Nada de presentes de valor (ex: carro);\n6. Continue supervisionando o uso de medicamentos;\n7. Relate por escrito à equipe tudo que aconteceu;\n8. Não fale sobre interromper o tratamento;\n9. Mantenha contato com o coordenador da clínica;\n10. O retorno à Clínica deve acontecer até 16:30hs.", "image": "assets/ressocializacao-e-reinsercao-familiar.jpg", "side": "right"}, {"title": "Custos e Demandas Administrativas", "body": "• Mensalidades: consulte o setor administrativo para informações completas;\n• Enxoval: é fornecida uma lista com itens obrigatórios para uso pessoal do paciente;\n• Kit N.A.: sugerimos fortemente a aquisição de um kit o Texto Básico de Narcóticos Anônimos, caderno e caneta. O Kit e outras literaturas de Narcóticos Anônimos podem também ser adquiridos na Lanchonete AMA.\n• Lanchonete: sistema pré-pago. O saldo restante será devolvido no final do tratamento;\n• Translado: em caso de deslocamentos externos, os valores serão repassados à família;\n• Documentos: pedidos formais têm prazo de até 15 dias úteis para entrega.", "image": "assets/custos-e-demandas-administrativas.jpg", "side": "left"}, {"title": "Telefones Úteis", "body": "Administrativo ................................................................ (83) 98118-0777\nServiço Social ................................................................ (83) 98150-0807\nCoordenação Terapêutica ............................................. (83) 98140-7770\nEnfermagem .................................................................. (83) 98181-1972\nFarmácia ........................................................................ (83) 98133-0777\nLanchonete .................................................................... (83) 98163-7007", "image": "assets/telefones-uteis.jpg", "side": "right"}];
+
+    const tabs = document.getElementById('tabs');
+    const content = document.getElementById('content');
+    let idx = 0;
+
+    // para(): agora "linkifica" sites e números de telefone (WhatsApp)
+    function para(text){
+      function linkify(line){
+        // Links com http/https
+        line = line.replace(/(https?:\/\/[^\s)]+)/g, '<a href="$1" target="_blank">$1</a>');
+        // Links começando com www.
+        line = line.replace(/(^|[\s(])(www\.[^\s)]+)/g, (m,p1,url)=> p1 + '<a href="http://' + url + '" target="_blank">' + url + '</a>');
+        // Telefones (DD) 9XXXX-XXXX -> WhatsApp
+        line = line.replace(/\((\d{2})\)\s*(\d{4,5})[-\s]?(\d{4})/g, (m, ddd, p1, p2) => {
+          const num = '55' + ddd + p1 + p2;
+          const shown = ddd + ' ' + p1 + '-' + p2;
+          return '<a href="https://wa.me/' + num + '" target="_blank">' + shown + '</a>';
+        });
+        return line;
+      }
+      const lines = text.split(/\n+/).map(l=>l.trim()).filter(Boolean);
+      return lines.map(l=>{
+        if(l.startsWith('- ')) return '<li>' + linkify(l.slice(2)) + '</li>';
+        if(/^\d+\. /.test(l)) return '<li>' + linkify(l.replace(/^\d+\. /,'')) + '</li>';
+        return '<p>' + linkify(l) + '</p>';
+      }).join('');
+    }
+
+    function renderTabs(){
+      tabs.innerHTML='';
+      SECTIONS.forEach((s,i)=>{
+        const a=document.createElement('a');
+        a.href='#'+i; a.textContent=s.title;
+        if(i===idx) a.classList.add('active');
+        tabs.appendChild(a);
+      });
+    }
+
+    function render(){
+      renderTabs();
+      const s=SECTIONS[idx];
+      const textHTML=para(s.body);
+      const textBlock = textHTML.includes('<li>')?`<ul>${textHTML}</ul>`:textHTML;
+      const left = `<div class="media"><img src="${s.image}" alt="${s.title}"/></div>`;
+      const right = `<div class="card"><h1>${s.title}</h1>${textBlock}</div>`;
+      const pair = s.side==='left'? left+right : right+left;
+      content.innerHTML = `<section class="split ${s.side}">${pair}</section>`;
+      location.hash='#'+idx;
+      document.getElementById('prevBtn').style.visibility = idx>0?'visible':'hidden';
+      document.getElementById('nextBtn').style.visibility = idx<SECTIONS.length-1?'visible':'hidden';
+    }
+
+    window.addEventListener('hashchange', ()=>{
+      const n=parseInt(location.hash.replace('#',''));
+      if(!isNaN(n)){ idx=Math.max(0, Math.min(SECTIONS.length-1, n)); render(); }
+    });
+    document.getElementById('prevBtn').onclick = e=>{ e.preventDefault(); if(idx>0){ idx--; render(); } };
+    document.getElementById('nextBtn').onclick = e=>{ e.preventDefault(); if(idx<SECTIONS.length-1){ idx++; render(); } };
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
+    render();
+  </script>
+</body>
+</html>
+
